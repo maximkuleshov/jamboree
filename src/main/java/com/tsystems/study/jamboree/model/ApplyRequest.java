@@ -1,9 +1,9 @@
-package com.tsystems.study.jamboree.dto;
+package com.tsystems.study.jamboree.model;
 
 import lombok.Data;
 
 @Data
-public class ApplyRequestDto {
-    private int eventId;
-    private int userId;
+public class ApplyRequest {
+    private String eventId;
+    private String userLogin;
 }

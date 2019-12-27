@@ -1,16 +1,22 @@
-package com.tsystems.study.jamboree.dto;
+package com.tsystems.study.jamboree.model;
+
+import java.util.Date;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.Date;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @AllArgsConstructor
-public class EventDto {
-    private int id;
+@Document(collection = "events")
+public class Event {
+    @Id
+    private String id;
     private String title;
     private String description;
     private Date startDate;
     private Date endDate;
+    private Set<User> participants;
 }
