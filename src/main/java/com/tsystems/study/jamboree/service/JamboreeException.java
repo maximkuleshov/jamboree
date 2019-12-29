@@ -1,11 +1,16 @@
 package com.tsystems.study.jamboree.service;
 
-public class JamboreeException extends Exception {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    public JamboreeException() {
-    }
+@ResponseStatus(value= HttpStatus.BAD_REQUEST)
+public class JamboreeException extends Exception {
 
     public JamboreeException(String message) {
         super(message);
+    }
+
+    public JamboreeException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

@@ -1,15 +1,12 @@
 package com.tsystems.study.jamboree.rest;
 
+import java.net.URI;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.tsystems.study.jamboree.model.ApplyRequest;
 import com.tsystems.study.jamboree.model.Event;
@@ -20,6 +17,7 @@ import com.tsystems.study.jamboree.service.JamboreeException;
 
 @RestController
 @RequestMapping("/api/event")
+@CrossOrigin
 public class EventController {
     @Autowired
     private EventService eventService;
@@ -32,7 +30,7 @@ public class EventController {
         return eventService.findAll().toArray(new Event[0]);
     }
 
-    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/apply", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> applyForEvent(@RequestBody ApplyRequest applyRequest) throws JamboreeException {
         System.out.println(applyRequest);
 
@@ -49,5 +47,11 @@ public class EventController {
         eventService.applyToEvent(eventOptional.get(), userOptional.get());
 
         return ResponseEntity.ok("{}");
+    }
+
+    @PostMapping("")
+    public ResponseEntity<String> createEvent(@RequestBody Event newEvent) throws JamboreeException {
+        eventService.create(newEvent);
+        return ResponseEntity.created(URI.create("/")).build();
     }
 }
